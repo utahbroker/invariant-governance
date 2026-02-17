@@ -1,0 +1,48 @@
+{
+  "name": "@invariant-governance/core",
+  "version": "0.1.0",
+  "description": "Deterministic governance framework for autonomous systems. Enforces authorization boundaries with cryptographic receipts, stateful accumulators, and structural separation of authority, execution, and observation.",
+  "license": "Apache-2.0",
+  "author": "Joseph H Mills",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/utahbroker/invariant-governance.git"
+  },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "PATENT_NOTICE.md",
+    "NOTICE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "tsc --noEmit",
+    "clean": "rimraf dist",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.3",
+    "@vitest/coverage-v8": "^2.0.0",
+    "rimraf": "^5.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^2.0.0"
+  }
+}
