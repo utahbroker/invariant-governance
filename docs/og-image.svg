@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1120"/>
+      <stop offset="50%" stop-color="#111d33"/>
+      <stop offset="100%" stop-color="#0b1120"/>
+    </linearGradient>
+    <linearGradient id="shield" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1f6feb"/>
+      <stop offset="100%" stop-color="#58a6ff"/>
+    </linearGradient>
+    <pattern id="dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="16" cy="16" r="1" fill="rgba(88,166,255,0.08)"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  <!-- Glow -->
+  <ellipse cx="350" cy="315" rx="250" ry="250" fill="rgba(31,111,235,0.08)"/>
+  <!-- Shield -->
+  <g transform="translate(250, 200) scale(3.2)">
+    <path d="M32 4L8 16v16c0 14.4 10.2 27.8 24 32 13.8-4.2 24-17.6 24-32V16L32 4z" fill="url(#shield)" opacity="0.9"/>
+    <path d="M32 14L16 22v10c0 9.6 6.8 18.5 16 21.3 9.2-2.8 16-11.7 16-21.3V22L32 14z" fill="#0b1120"/>
+    <path d="M28 30l-4-4-2.5 2.5L28 35l12-12-2.5-2.5L28 30z" fill="#58a6ff"/>
+  </g>
+  <!-- Text -->
+  <text x="550" y="270" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="700" fill="#e6edf3" letter-spacing="-1">Invariant</text>
+  <text x="550" y="340" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="700" fill="#e6edf3" letter-spacing="-1">Governance</text>
+  <text x="550" y="390" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="#8b949e">Deterministic governance for autonomous systems.</text>
+  <!-- Bottom badges -->
+  <text x="550" y="480" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#6e7681" letter-spacing="2">OPEN SOURCE  |  APACHE 2.0  |  PATENT PROTECTED</text>
+  <!-- Border -->
+  <rect x="1" y="1" width="1198" height="628" rx="0" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+</svg>

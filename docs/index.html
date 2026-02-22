@@ -5,6 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Invariant Governance -- Deterministic Governance for Autonomous Systems</title>
 <meta name="description" content="Open-source framework enforcing deterministic authorization boundaries on autonomous agents, trading algorithms, robotic controllers, and smart contracts.">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Invariant Governance">
+<meta property="og:description" content="Deterministic governance for autonomous systems. Cryptographic receipts, structural separation, zero-trust enforcement.">
+<meta property="og:url" content="https://utahbroker.github.io/invariant-governance/">
+<meta property="og:image" content="https://utahbroker.github.io/invariant-governance/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Invariant Governance">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Invariant Governance">
+<meta name="twitter:description" content="Deterministic governance for autonomous systems. Open-source under Apache 2.0.">
+<meta name="twitter:image" content="https://utahbroker.github.io/invariant-governance/og-image.png">
+
+<!-- Favicon (inline SVG) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%231f6feb'/%3E%3Cstop offset='100%25' stop-color='%2358a6ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M32 4L8 16v16c0 14.4 10.2 27.8 24 32 13.8-4.2 24-17.6 24-32V16L32 4z' fill='url(%23g)' opacity='0.9'/%3E%3Cpath d='M32 14L16 22v10c0 9.6 6.8 18.5 16 21.3 9.2-2.8 16-11.7 16-21.3V22L32 14z' fill='%230b1120'/%3E%3Cpath d='M28 30l-4-4-2.5 2.5L28 35l12-12-2.5-2.5L28 30z' fill='%2358a6ff'/%3E%3C/svg%3E">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,15 +37,32 @@ body {
   color: #c9d1d9;
   line-height: 1.7;
   font-size: 16px;
+  overflow-x: hidden;
 }
 a { color: #58a6ff; text-decoration: none; transition: color 0.2s; }
 a:hover { color: #79c0ff; }
 
-/* Nav */
+/* ── Scroll Animations ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── Nav ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   background: rgba(11, 17, 32, 0.92);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255,255,255,0.06);
   padding: 0 2rem;
 }
@@ -36,20 +73,51 @@ nav .nav-inner {
 }
 nav .nav-brand {
   font-weight: 700; font-size: 0.95rem; color: #e6edf3;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.5rem;
 }
+nav .nav-brand svg { width: 22px; height: 22px; flex-shrink: 0; }
 nav .nav-links { display: flex; gap: 1.5rem; }
 nav .nav-links a {
   font-size: 0.82rem; color: #8b949e; font-weight: 500;
   text-transform: uppercase; letter-spacing: 0.06em;
 }
 nav .nav-links a:hover { color: #e6edf3; }
+
+/* ── Hamburger ── */
+.hamburger {
+  display: none; background: none; border: none; cursor: pointer;
+  width: 32px; height: 32px; position: relative; z-index: 110;
+}
+.hamburger span {
+  display: block; width: 20px; height: 2px; background: #c9d1d9;
+  position: absolute; left: 6px; transition: all 0.3s ease;
+}
+.hamburger span:nth-child(1) { top: 9px; }
+.hamburger span:nth-child(2) { top: 15px; }
+.hamburger span:nth-child(3) { top: 21px; }
+.hamburger.active span:nth-child(1) { top: 15px; transform: rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { top: 15px; transform: rotate(-45deg); }
+
 @media (max-width: 700px) {
-  nav .nav-links { gap: 0.8rem; }
-  nav .nav-links a { font-size: 0.72rem; }
+  .hamburger { display: block; }
+  nav .nav-links {
+    position: fixed; top: 0; right: -100%; width: 260px; height: 100vh;
+    background: #0d1525; flex-direction: column; padding: 5rem 2rem 2rem;
+    gap: 1.25rem; transition: right 0.3s ease;
+    border-left: 1px solid rgba(255,255,255,0.06);
+  }
+  nav .nav-links.open { right: 0; }
+  nav .nav-links a { font-size: 0.95rem; }
+  .mobile-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5); z-index: 99;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .mobile-overlay.active { opacity: 1; pointer-events: auto; }
 }
 
-/* Sections */
+/* ── Sections ── */
 section { padding: 5rem 2rem; }
 .container { max-width: 1000px; margin: 0 auto; }
 h2 {
@@ -63,25 +131,65 @@ h2::after {
 h3 { font-size: 1.1rem; font-weight: 600; color: #e6edf3; margin-bottom: 0.5rem; }
 p { margin-bottom: 1rem; }
 
-/* Hero */
+/* ── Hero ── */
 .hero {
   min-height: 100vh; display: flex; align-items: center; justify-content: center;
   text-align: center; padding-top: 56px;
-  background: linear-gradient(170deg, #0b1120 0%, #111d33 40%, #0b1120 100%);
-  position: relative;
+  position: relative; overflow: hidden;
 }
-.hero::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+
+/* Animated grid background */
+.hero-grid {
+  position: absolute; inset: 0; overflow: hidden;
+  background:
+    linear-gradient(170deg, #0b1120 0%, #111d33 40%, #0b1120 100%);
+}
+.hero-grid::before {
+  content: '';
+  position: absolute; inset: -50%;
+  background-image:
+    radial-gradient(circle, rgba(88, 166, 255, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+  animation: gridDrift 20s linear infinite;
+}
+.hero-grid::after {
+  content: '';
+  position: absolute;
+  top: 30%; left: 50%; transform: translate(-50%, -50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(31, 111, 235, 0.15) 0%, transparent 70%);
+  animation: glowPulse 4s ease-in-out infinite;
+}
+@keyframes gridDrift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(32px, 32px); }
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+}
+.hero-fade {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
   background: linear-gradient(to bottom, transparent, #0b1120);
+  z-index: 1;
 }
-.hero-content { position: relative; z-index: 1; max-width: 760px; }
+
+.hero-content { position: relative; z-index: 2; max-width: 760px; }
 .hero h1 {
   font-size: 3rem; font-weight: 700; color: #e6edf3;
   letter-spacing: -0.03em; margin-bottom: 0.75rem;
 }
 .hero .subtitle {
-  font-size: 1.25rem; color: #8b949e; margin-bottom: 2rem; font-weight: 400;
+  font-size: 1.25rem; color: #8b949e; margin-bottom: 1.5rem; font-weight: 400;
 }
+
+/* Badges */
+.hero-badges {
+  display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;
+  margin-bottom: 1.75rem;
+}
+.hero-badges img { height: 20px; }
+
 .hero .positioning {
   font-size: 0.95rem; color: #6e7681; line-height: 1.8;
   max-width: 620px; margin: 0 auto 2.5rem;
@@ -104,7 +212,7 @@ p { margin-bottom: 1rem; }
   .hero .subtitle { font-size: 1.05rem; }
 }
 
-/* Problem */
+/* ── Problem ── */
 .problem { background: #0d1525; }
 .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem; }
 .problem-card {
@@ -121,7 +229,7 @@ p { margin-bottom: 1rem; }
 .paradox strong { color: #58a6ff; }
 @media (max-width: 700px) { .problem-grid { grid-template-columns: 1fr; } }
 
-/* Architecture */
+/* ── Architecture ── */
 .arch { background: #0b1120; }
 .arch-diagram {
   display: flex; flex-direction: column; align-items: center;
@@ -131,6 +239,10 @@ p { margin-bottom: 1rem; }
   width: 100%; max-width: 620px; border: 1px solid rgba(255,255,255,0.08);
   border-radius: 8px; padding: 1.5rem; text-align: center;
   position: relative;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.arch-plane:hover {
+  box-shadow: 0 0 20px rgba(31, 111, 235, 0.1);
 }
 .arch-plane .plane-label {
   position: absolute; top: -0.65rem; left: 1.25rem;
@@ -149,8 +261,11 @@ p { margin-bottom: 1rem; }
 .arch-caps .can { color: #3fb950; }
 .arch-caps .cannot { color: #f85149; }
 .plane-authority { border-color: rgba(31,111,235,0.3); background: rgba(31,111,235,0.04); }
+.plane-authority:hover { border-color: rgba(31,111,235,0.6); }
 .plane-execution { border-color: rgba(63,185,80,0.3); background: rgba(63,185,80,0.04); }
+.plane-execution:hover { border-color: rgba(63,185,80,0.6); }
 .plane-telemetry { border-color: rgba(210,153,34,0.3); background: rgba(210,153,34,0.04); }
+.plane-telemetry:hover { border-color: rgba(210,153,34,0.6); }
 .arch-connector {
   width: 2px; height: 32px; position: relative;
   display: flex; align-items: center; justify-content: center;
@@ -166,20 +281,48 @@ p { margin-bottom: 1rem; }
   position: relative; z-index: 1; white-space: nowrap;
 }
 
-/* Mechanisms */
+/* ── Mechanisms ── */
 .mechanisms { background: #0d1525; }
 .mech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1.5rem; }
 .mech-card {
   background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
   border-radius: 8px; padding: 1.25rem;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.mech-card:hover {
+  border-color: rgba(255,255,255,0.15);
+  transform: translateY(-2px);
 }
 .mech-card h3 { font-size: 0.95rem; margin-bottom: 0.4rem; }
 .mech-card p { font-size: 0.85rem; color: #8b949e; margin-bottom: 0; }
 .mech-card.wide { grid-column: 1 / -1; }
 @media (max-width: 700px) { .mech-grid { grid-template-columns: 1fr; } }
 
-/* Use Cases */
-.usecases { background: #0b1120; }
+/* ── Comparison Table ── */
+.comparison { background: #0b1120; }
+.compare-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+.compare-table th, .compare-table td {
+  text-align: left; padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.88rem;
+}
+.compare-table th {
+  color: #8b949e; font-weight: 600; font-size: 0.76rem;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.compare-table thead th { border-bottom: 2px solid rgba(255,255,255,0.1); }
+.compare-table td:first-child { color: #e6edf3; font-weight: 600; white-space: nowrap; }
+.compare-table tr:last-child { background: rgba(31, 111, 235, 0.06); }
+.compare-table tr:last-child td { color: #e6edf3; font-weight: 500; }
+.check { color: #3fb950; }
+.cross { color: #f85149; }
+.partial { color: #d29922; }
+@media (max-width: 600px) {
+  .compare-table th, .compare-table td { padding: 0.6rem 0.5rem; font-size: 0.8rem; }
+}
+
+/* ── Use Cases ── */
+.usecases { background: #0d1525; }
 .use-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
 .use-table th, .use-table td {
   text-align: left; padding: 0.75rem 1rem;
@@ -195,13 +338,16 @@ p { margin-bottom: 1rem; }
   .use-table th, .use-table td { padding: 0.6rem 0.5rem; font-size: 0.82rem; }
 }
 
-/* Code */
-.code-section { background: #0d1525; }
+/* ── Code ── */
+.code-section { background: #0b1120; }
+.code-block-wrapper {
+  position: relative; margin-top: 1rem;
+}
 .code-block {
   background: #161b22; border: 1px solid rgba(255,255,255,0.06);
   border-radius: 8px; padding: 1.5rem; overflow-x: auto;
   font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem;
-  line-height: 1.65; color: #c9d1d9; margin-top: 1rem;
+  line-height: 1.65; color: #c9d1d9;
 }
 .code-block .kw { color: #ff7b72; }
 .code-block .fn { color: #d2a8ff; }
@@ -210,27 +356,46 @@ p { margin-bottom: 1rem; }
 .code-block .num { color: #79c0ff; }
 .code-block .type { color: #ffa657; }
 .code-block .prop { color: #7ee787; }
+
+.install-wrapper {
+  position: relative; margin-top: 0.75rem;
+}
 .install-cmd {
   background: #161b22; border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 6px; padding: 0.75rem 1.25rem; margin-top: 0.75rem;
+  border-radius: 6px; padding: 0.75rem 1.25rem;
   font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: #c9d1d9;
 }
 .install-cmd .prompt { color: #6e7681; user-select: none; }
 
-/* Enterprise */
-.enterprise { background: #0b1120; }
+/* Copy button */
+.copy-btn {
+  position: absolute; top: 0.5rem; right: 0.5rem;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 5px; padding: 0.35rem 0.65rem;
+  color: #8b949e; font-size: 0.72rem; font-family: 'IBM Plex Sans', sans-serif;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 0.3rem;
+}
+.copy-btn:hover { background: rgba(255,255,255,0.1); color: #e6edf3; }
+.copy-btn.copied { background: rgba(63, 185, 80, 0.15); color: #3fb950; border-color: rgba(63, 185, 80, 0.3); }
+.copy-btn svg { width: 14px; height: 14px; }
+
+/* ── Enterprise ── */
+.enterprise { background: #0d1525; }
 .ent-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
 .ent-card {
   background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
   border-radius: 8px; padding: 1.5rem;
+  transition: border-color 0.3s;
 }
+.ent-card:hover { border-color: rgba(255,255,255,0.15); }
 .ent-card h3 { margin-bottom: 0.5rem; }
 .ent-card p { font-size: 0.9rem; color: #8b949e; margin-bottom: 0; }
 @media (max-width: 700px) { .ent-grid { grid-template-columns: 1fr; } }
 
-/* Patent */
+/* ── Patent ── */
 .patent {
-  background: #0d1525;
+  background: #0b1120;
   border-top: 1px solid rgba(255,255,255,0.04);
 }
 .patent-notice {
@@ -239,7 +404,7 @@ p { margin-bottom: 1rem; }
 }
 .patent-notice p { font-size: 0.88rem; color: #8b949e; margin-bottom: 0; }
 
-/* Footer */
+/* ── Footer ── */
 footer {
   background: #080c18;
   border-top: 1px solid rgba(255,255,255,0.04);
@@ -258,11 +423,25 @@ footer {
 </head>
 <body>
 
+<!-- Mobile overlay -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
 <nav>
   <div class="nav-inner">
-    <span class="nav-brand">Invariant Governance</span>
-    <div class="nav-links">
+    <span class="nav-brand">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M32 4L8 16v16c0 14.4 10.2 27.8 24 32 13.8-4.2 24-17.6 24-32V16L32 4z" fill="#1f6feb" opacity="0.9"/>
+        <path d="M32 14L16 22v10c0 9.6 6.8 18.5 16 21.3 9.2-2.8 16-11.7 16-21.3V22L32 14z" fill="#0b1120"/>
+        <path d="M28 30l-4-4-2.5 2.5L28 35l12-12-2.5-2.5L28 30z" fill="#58a6ff"/>
+      </svg>
+      Invariant Governance
+    </span>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
       <a href="#problem">Problem</a>
+      <a href="#comparison">Why Not</a>
       <a href="#architecture">Architecture</a>
       <a href="#mechanisms">Mechanisms</a>
       <a href="#usecases">Use Cases</a>
@@ -273,9 +452,17 @@ footer {
 </nav>
 
 <section class="hero" id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-fade"></div>
   <div class="hero-content">
     <h1>Invariant Governance</h1>
     <p class="subtitle">Deterministic governance for autonomous systems.</p>
+    <div class="hero-badges">
+      <img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License: Apache 2.0" loading="lazy">
+      <img src="https://img.shields.io/npm/v/@invariant-governance/core.svg?color=blue" alt="npm version" loading="lazy">
+      <img src="https://img.shields.io/badge/tests-78%20passing-brightgreen.svg" alt="Tests: 78 passing" loading="lazy">
+      <img src="https://img.shields.io/badge/TypeScript-strict-blue.svg" alt="TypeScript: strict" loading="lazy">
+    </div>
     <p class="positioning">
       Autonomous agents need three layers: <strong>knowledge</strong> (what to do),
       <strong>connectivity</strong> (how to reach tools and data), and
@@ -291,30 +478,87 @@ footer {
 
 <section class="problem" id="problem">
   <div class="container">
-    <h2>The Problem</h2>
-    <p>Autonomous systems are making consequential decisions at machine speed. Existing governance approaches force a choice between two failure modes:</p>
+    <h2 class="reveal">The Problem</h2>
+    <p class="reveal reveal-delay-1">Autonomous systems are making consequential decisions at machine speed. Existing governance approaches force a choice between two failure modes:</p>
     <div class="problem-grid">
-      <div class="problem-card">
+      <div class="problem-card reveal reveal-delay-2">
         <h3>Human-in-the-Loop</h3>
         <p>Safe but slow. Every decision waits for manual approval. Latency kills throughput, operators develop alert fatigue, and the system degrades to rubber-stamping. In high-frequency environments, this approach is structurally unviable.</p>
       </div>
-      <div class="problem-card">
+      <div class="problem-card reveal reveal-delay-3">
         <h3>Probabilistic Guardrails</h3>
         <p>Fast but brittle. LLM-based filters and confidence thresholds can be gamed, hallucinated past, or silently degraded. They offer no cryptographic proof of authorization and cannot detect salami-slicing attacks.</p>
       </div>
     </div>
-    <div class="paradox">
+    <div class="paradox reveal reveal-delay-4">
       <p>This is the <strong>Latency-Integrity Paradox</strong>: the faster your system needs to operate, the harder it becomes to maintain governance integrity -- unless the governance architecture itself is redesigned from first principles.</p>
+    </div>
+  </div>
+</section>
+
+<section class="comparison" id="comparison">
+  <div class="container">
+    <h2 class="reveal">Why Not Just...</h2>
+    <p class="reveal reveal-delay-1">Every existing approach trades away something critical. Invariant Governance is the first framework designed to hold all four properties simultaneously.</p>
+    <div class="reveal reveal-delay-2">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Approach</th>
+            <th>Speed</th>
+            <th>Cryptographic Proof</th>
+            <th>Cumulative Tracking</th>
+            <th>Emergency Halt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Human-in-the-Loop</td>
+            <td class="cross">Slow</td>
+            <td class="cross">None</td>
+            <td class="partial">Manual</td>
+            <td class="check">Yes</td>
+          </tr>
+          <tr>
+            <td>LLM Guardrails</td>
+            <td class="check">Fast</td>
+            <td class="cross">None</td>
+            <td class="cross">No</td>
+            <td class="partial">Partial</td>
+          </tr>
+          <tr>
+            <td>RBAC / Policy Engines</td>
+            <td class="check">Fast</td>
+            <td class="cross">None</td>
+            <td class="cross">No</td>
+            <td class="partial">Partial</td>
+          </tr>
+          <tr>
+            <td>Smart Contract Gates</td>
+            <td class="partial">Medium</td>
+            <td class="check">On-chain</td>
+            <td class="partial">Per-chain</td>
+            <td class="cross">Irreversible</td>
+          </tr>
+          <tr>
+            <td>Invariant Governance</td>
+            <td class="check">Machine-speed</td>
+            <td class="check">Per-action receipts</td>
+            <td class="check">Stateful accumulator</td>
+            <td class="check">Sub-second halt</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
 
 <section class="arch" id="architecture">
   <div class="container">
-    <h2>Architecture</h2>
-    <p>Three structurally decoupled components that cannot be collapsed, bypassed, or silently degraded. Each is defined not just by what it does, but by what it <em>structurally cannot</em> do.</p>
+    <h2 class="reveal">Architecture</h2>
+    <p class="reveal reveal-delay-1">Three structurally decoupled components that cannot be collapsed, bypassed, or silently degraded. Each is defined not just by what it does, but by what it <em>structurally cannot</em> do.</p>
     <div class="arch-diagram">
-      <div class="arch-plane plane-authority">
+      <div class="arch-plane plane-authority reveal reveal-delay-1">
         <div class="plane-label">Authority Plane</div>
         <div class="component-name">Governance Kernel</div>
         <div class="component-desc">Evaluates policy, issues Approval Receipts and Fluidity Tokens, maintains the Stateful Accumulator.</div>
@@ -324,7 +568,7 @@ footer {
         </div>
       </div>
       <div class="arch-connector"><span>Sovereign Boundary</span></div>
-      <div class="arch-plane plane-execution">
+      <div class="arch-plane plane-execution reveal reveal-delay-2">
         <div class="plane-label">Execution Plane</div>
         <div class="component-name">Execution Gate</div>
         <div class="component-desc">Validates receipts via six-step cryptographic verification. Permits or blocks every outbound action.</div>
@@ -334,7 +578,7 @@ footer {
         </div>
       </div>
       <div class="arch-connector"><span>One-Way Mirror</span></div>
-      <div class="arch-plane plane-telemetry">
+      <div class="arch-plane plane-telemetry reveal reveal-delay-3">
         <div class="plane-label">Advisory Telemetry</div>
         <div class="component-name">Telemetry Observer</div>
         <div class="component-desc">Records all decisions, computes degradation scores, detects drift. One-way data ingestion only.</div>
@@ -344,31 +588,31 @@ footer {
         </div>
       </div>
     </div>
-    <p style="text-align:center;font-size:0.85rem;color:#6e7681;">These constraints are not conventions -- they are enforced by the architecture. The Kernel has no credentials for execution targets. The Gate has no signing key. Telemetry has no write channel.</p>
+    <p class="reveal reveal-delay-4" style="text-align:center;font-size:0.85rem;color:#6e7681;">These constraints are not conventions -- they are enforced by the architecture. The Kernel has no credentials for execution targets. The Gate has no signing key. Telemetry has no write channel.</p>
   </div>
 </section>
 
 <section class="mechanisms" id="mechanisms">
   <div class="container">
-    <h2>Key Mechanisms</h2>
+    <h2 class="reveal">Key Mechanisms</h2>
     <div class="mech-grid">
-      <div class="mech-card">
+      <div class="mech-card reveal reveal-delay-1">
         <h3>Approval Receipts</h3>
         <p>Cryptographically signed, non-fungible, single-use authorization tokens. Each receipt binds a specific action to a specific context at a specific time, with parameter-hash binding to prevent substitution attacks.</p>
       </div>
-      <div class="mech-card">
+      <div class="mech-card reveal reveal-delay-2">
         <h3>Fluidity Tokens</h3>
         <p>Speculative pre-authorization for high-frequency and high-latency environments. A Fluidity Token grants bounded execution authority consumed incrementally, enabling machine-speed operation within governor-defined limits.</p>
       </div>
-      <div class="mech-card">
+      <div class="mech-card reveal reveal-delay-3">
         <h3>Stateful Accumulator</h3>
         <p>Tracks cumulative impact across all actions, not just individual transactions. Defeats salami-slicing attacks where each action falls within bounds but the cumulative effect is catastrophic.</p>
       </div>
-      <div class="mech-card">
+      <div class="mech-card reveal reveal-delay-4">
         <h3>Poison Pill Broadcast</h3>
         <p>Emergency halt with sub-second propagation. Revokes all outstanding Fluidity Tokens and Approval Receipts system-wide, destroys ephemeral key shards, and forces lockdown faster than any agent can act.</p>
       </div>
-      <div class="mech-card wide">
+      <div class="mech-card wide reveal">
         <h3>Hardware HAL Gate</h3>
         <p>For physical safety-critical systems (robotics, industrial control, infrastructure), a hardware-enforced gate with FPGA governance logic, galvanic isolation, and a physics logic module. Software cannot bypass it.</p>
       </div>
@@ -378,29 +622,38 @@ footer {
 
 <section class="usecases" id="usecases">
   <div class="container">
-    <h2>Use Cases</h2>
-    <p>Domain-agnostic by design. Validated across eight industrial domains:</p>
-    <table class="use-table">
-      <thead><tr><th>Domain</th><th>Example Scenario</th></tr></thead>
-      <tbody>
-        <tr><td>Financial Services</td><td>Algorithmic trading governance, transaction authorization, cumulative exposure limits</td></tr>
-        <tr><td>Healthcare</td><td>Clinical decision support, nurse handoff attestation, medication administration gates</td></tr>
-        <tr><td>Orbital / Disconnected</td><td>Satellite command authorization with high-latency Fluidity Tokens, autonomous operation within bounded authority</td></tr>
-        <tr><td>Blockchain</td><td>On-chain governance enforcement, smart contract execution gating, cross-chain authorization</td></tr>
-        <tr><td>Logistics</td><td>Autonomous vehicle routing, warehouse robotics, shipment release authorization</td></tr>
-        <tr><td>Enterprise</td><td>Contract execution workflows, procurement authorization, multi-party approval chains</td></tr>
-        <tr><td>Government</td><td>Benefits issuance, permit authorization, regulatory compliance enforcement</td></tr>
-        <tr><td>Critical Infrastructure</td><td>Power grid control, water treatment, industrial SCADA with Hardware HAL Gate</td></tr>
-      </tbody>
-    </table>
+    <h2 class="reveal">Use Cases</h2>
+    <p class="reveal reveal-delay-1">Domain-agnostic by design. Validated across eight industrial domains:</p>
+    <div class="reveal reveal-delay-2">
+      <table class="use-table">
+        <thead><tr><th>Domain</th><th>Example Scenario</th></tr></thead>
+        <tbody>
+          <tr><td>Financial Services</td><td>Algorithmic trading governance, transaction authorization, cumulative exposure limits</td></tr>
+          <tr><td>Healthcare</td><td>Clinical decision support, nurse handoff attestation, medication administration gates</td></tr>
+          <tr><td>Orbital / Disconnected</td><td>Satellite command authorization with high-latency Fluidity Tokens, autonomous operation within bounded authority</td></tr>
+          <tr><td>Blockchain</td><td>On-chain governance enforcement, smart contract execution gating, cross-chain authorization</td></tr>
+          <tr><td>Logistics</td><td>Autonomous vehicle routing, warehouse robotics, shipment release authorization</td></tr>
+          <tr><td>Enterprise</td><td>Contract execution workflows, procurement authorization, multi-party approval chains</td></tr>
+          <tr><td>Government</td><td>Benefits issuance, permit authorization, regulatory compliance enforcement</td></tr>
+          <tr><td>Critical Infrastructure</td><td>Power grid control, water treatment, industrial SCADA with Hardware HAL Gate</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 
 <section class="code-section" id="quickstart">
   <div class="container">
-    <h2>Quick Start</h2>
-    <div class="install-cmd"><span class="prompt">$ </span>npm install @invariant-governance/core</div>
-    <div class="code-block"><span class="kw">import</span> {
+    <h2 class="reveal">Quick Start</h2>
+    <div class="install-wrapper reveal reveal-delay-1">
+      <div class="install-cmd" id="installCmd"><span class="prompt">$ </span>npm install @invariant-governance/core</div>
+      <button class="copy-btn" data-target="installCmd" onclick="copyText(this, 'npm install @invariant-governance/core')">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25z"/><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25z"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="code-block-wrapper reveal reveal-delay-2">
+      <div class="code-block" id="codeExample"><span class="kw">import</span> {
   <span class="type">GovernanceKernel</span>,
   <span class="type">ExecutionGate</span>,
   <span class="type">TelemetryObserver</span>,
@@ -412,13 +665,13 @@ footer {
     <span class="prop">maxSingleAction</span>: <span class="num">10_000</span>,
     <span class="prop">maxCumulativeWindow</span>: <span class="num">100_000</span>,
     <span class="prop">windowDuration</span>: <span class="str">"1h"</span>,
-    <span class="prop">requireMultiSig</span>: (<span class="fn">amount</span>) => amount > <span class="num">50_000</span>,
+    <span class="prop">requireMultiSig</span>: (<span class="fn">amount</span>) =&gt; amount &gt; <span class="num">50_000</span>,
   },
 });
 
 <span class="kw">const</span> gate = <span class="kw">new</span> <span class="type">ExecutionGate</span>({
   <span class="prop">kernelPublicKey</span>: kernel.<span class="prop">publicKey</span>,
-  <span class="prop">onPoisonPill</span>: () => process.<span class="fn">exit</span>(<span class="num">1</span>),
+  <span class="prop">onPoisonPill</span>: () =&gt; process.<span class="fn">exit</span>(<span class="num">1</span>),
 });
 
 <span class="kw">const</span> telemetry = <span class="kw">new</span> <span class="type">TelemetryObserver</span>({
@@ -434,24 +687,29 @@ footer {
 });
 
 <span class="cmt">// Execute only if the receipt is valid</span>
-<span class="kw">const</span> result = <span class="kw">await</span> gate.<span class="fn">execute</span>(receipt, <span class="kw">async</span> () => {
+<span class="kw">const</span> result = <span class="kw">await</span> gate.<span class="fn">execute</span>(receipt, <span class="kw">async</span> () =&gt; {
   <span class="kw">return await</span> ledger.<span class="fn">transfer</span>(<span class="str">"account-7291"</span>, <span class="num">5_000</span>);
 });
 
 <span class="cmt">// Telemetry records everything -- no intervention capability</span>
 telemetry.<span class="fn">record</span>(receipt, result);</div>
+      <button class="copy-btn" data-target="codeExample" onclick="copyCode(this)">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25z"/><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25z"/></svg>
+        Copy
+      </button>
+    </div>
   </div>
 </section>
 
 <section class="enterprise" id="enterprise">
   <div class="container">
-    <h2>Open Source + Enterprise</h2>
+    <h2 class="reveal">Open Source + Enterprise</h2>
     <div class="ent-grid">
-      <div class="ent-card">
+      <div class="ent-card reveal reveal-delay-1">
         <h3>Open Source (Apache 2.0)</h3>
         <p>The complete governance framework, all three components, protocol specifications, and reference implementations. Free to use, modify, and distribute. The Apache 2.0 license includes a patent grant for all use of the open-source software.</p>
       </div>
-      <div class="ent-card">
+      <div class="ent-card reveal reveal-delay-2">
         <h3>Commercial Licenses</h3>
         <p>Available for organizations requiring patent coverage beyond the Apache 2.0 grant, dedicated support, certified builds, or compliance documentation for regulated industries. Contact <a href="mailto:invariant@holladaylabsip.com">invariant@holladaylabsip.com</a>.</p>
       </div>
@@ -461,8 +719,8 @@ telemetry.<span class="fn">record</span>(receipt, result);</div>
 
 <section class="patent" id="patent">
   <div class="container">
-    <h2>Patent Notice</h2>
-    <div class="patent-notice">
+    <h2 class="reveal">Patent Notice</h2>
+    <div class="patent-notice reveal reveal-delay-1">
       <p>The Invariant Governance architecture is protected by U.S. Patent Application No. 19/533,191, PCT International Application No. PCT/US26/15432, and related continuation applications. Use of this software under the Apache 2.0 License includes a patent grant as described in Section 3 of the License. See <a href="https://github.com/utahbroker/invariant-governance/blob/main/PATENT_NOTICE.md">PATENT_NOTICE.md</a> for the full patent notice and defensive termination provisions.</p>
     </div>
   </div>
@@ -481,6 +739,69 @@ telemetry.<span class="fn">record</span>(receipt, result);</div>
     </div>
   </div>
 </footer>
+
+<script>
+// ── Scroll reveal ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── Mobile menu ──
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+const overlay = document.getElementById('mobileOverlay');
+
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  navLinks.classList.toggle('open');
+  overlay.classList.toggle('active');
+});
+
+overlay.addEventListener('click', () => {
+  hamburger.classList.remove('active');
+  navLinks.classList.remove('open');
+  overlay.classList.remove('active');
+});
+
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    navLinks.classList.remove('open');
+    overlay.classList.remove('active');
+  });
+});
+
+// ── Copy to clipboard ──
+function copyText(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    btn.innerHTML = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"/></svg> Copied!';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25z"/><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25z"/></svg> Copy';
+    }, 2000);
+  });
+}
+
+function copyCode(btn) {
+  const el = document.getElementById(btn.dataset.target);
+  const text = el.textContent || el.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    btn.innerHTML = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"/></svg> Copied!';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25z"/><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25z"/></svg> Copy';
+    }, 2000);
+  });
+}
+</script>
 
 </body>
 </html>
