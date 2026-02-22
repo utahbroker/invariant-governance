@@ -270,15 +270,10 @@ describe('Stress 4: Parameter Tampering (50 variations)', () => {
     ).rejects.toThrow(ParamsMismatchError);
   });
 
-  it('should detect type coercion vulnerability in stableStringify (KNOWN ISSUE)', async () => {
-    // FINDING: stableStringify uses String(obj) for non-object types,
-    // so String(1) === String('1') === '1'. This means the params hash
-    // for {id: 1} and {id: '1'} are IDENTICAL — type coercion is NOT
-    // detected by the current parameter binding implementation.
-    //
-    // This is a known gap: computeParamsHash({id: 1}) === computeParamsHash({id: '1'}).
-    // The hash is computed on the stable-stringified representation, which
-    // loses type information for primitives.
+  it('should detect type coercion in stableStringify (FIXED)', async () => {
+    // FIX: stableStringify now uses JSON.stringify(obj) for non-object types,
+    // so JSON.stringify(1) === '1' but JSON.stringify('1') === '"1"'.
+    // This means computeParamsHash({id: 1}) !== computeParamsHash({id: '1'}).
     const result = await kernel.evaluate({
       entity_path: '/org/bot',
       action: 'data.write',
@@ -286,12 +281,13 @@ describe('Stress 4: Parameter Tampering (50 variations)', () => {
       params: { id: 1 },
     });
 
-    // This SUCCEEDS because stableStringify(1) === stableStringify('1') === '1'
-    const exec = await gate.execute(result.receipt!, { id: '1' }, async () => 'coerced');
-    expect(exec.success).toBe(true);
+    // This now FAILS because stableStringify(1) !== stableStringify('1')
+    await expect(
+      gate.execute(result.receipt!, { id: '1' }, async () => 'coerced'),
+    ).rejects.toThrow(ParamsMismatchError);
 
-    // Verify the hashes are indeed identical
-    expect(computeParamsHash({ id: 1 })).toBe(computeParamsHash({ id: '1' }));
+    // Verify the hashes are now different
+    expect(computeParamsHash({ id: 1 })).not.toBe(computeParamsHash({ id: '1' }));
   });
 });
 
