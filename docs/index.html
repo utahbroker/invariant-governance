@@ -415,8 +415,56 @@ p { margin-bottom: 1rem; }
   .use-table th, .use-table td { padding: 0.6rem 0.5rem; font-size: 0.82rem; }
 }
 
+/* ── Integrations ── */
+.integrations { background: #0b1120; }
+.integrations-intro { font-size: 0.95rem; color: #8b949e; max-width: 720px; }
+.int-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1.5rem;
+}
+.int-card {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px; padding: 1.25rem; position: relative;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.int-card:hover {
+  border-color: rgba(255,255,255,0.15);
+  transform: translateY(-2px);
+}
+.int-card-header {
+  display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem;
+}
+.int-icon {
+  width: 32px; height: 32px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: 700; color: #fff; flex-shrink: 0;
+}
+.int-icon-robotics { background: linear-gradient(135deg, #f85149, #da3633); }
+.int-icon-agents { background: linear-gradient(135deg, #1f6feb, #388bfd); }
+.int-icon-trading { background: linear-gradient(135deg, #3fb950, #2ea043); }
+.int-icon-infra { background: linear-gradient(135deg, #d29922, #e6b422); }
+.int-card h3 { font-size: 0.95rem; margin-bottom: 0; }
+.int-card p { font-size: 0.85rem; color: #8b949e; margin-bottom: 0.6rem; }
+.int-card .int-frameworks {
+  font-size: 0.75rem; color: #6e7681;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 0.5rem; margin-top: 0.25rem;
+}
+.int-card .int-frameworks strong { color: #8b949e; }
+.int-card.wide { grid-column: 1 / -1; }
+.int-diagram {
+  margin-top: 2rem; padding: 1.5rem;
+  background: #161b22; border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px; text-align: center;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem;
+  line-height: 2; color: #8b949e;
+}
+.int-diagram .layer-your { color: #58a6ff; font-weight: 600; }
+.int-diagram .layer-ext { color: #c9d1d9; }
+.int-diagram .layer-arrow { color: #6e7681; }
+@media (max-width: 700px) { .int-grid { grid-template-columns: 1fr; } }
+
 /* ── Code ── */
-.code-section { background: #0b1120; }
+.code-section { background: #0d1525; }
 .code-block-wrapper {
   position: relative; margin-top: 1rem;
 }
@@ -522,6 +570,7 @@ footer {
       <a href="#architecture">Architecture</a>
       <a href="#mechanisms">Mechanisms</a>
       <a href="#usecases">Use Cases</a>
+      <a href="#integrations">Integrations</a>
       <a href="#quickstart">Quick Start</a>
       <a href="#enterprise">Enterprise</a>
     </div>
@@ -755,6 +804,58 @@ footer {
           <tr><td>Critical Infrastructure</td><td>Power grid control, water treatment, industrial SCADA with Hardware HAL Gate</td></tr>
         </tbody>
       </table>
+    </div>
+  </div>
+</section>
+
+<section class="integrations" id="integrations">
+  <div class="container">
+    <h2 class="reveal">The Missing Layer</h2>
+    <p class="integrations-intro reveal reveal-delay-1">Invariant Governance is not a competing framework. It is the governance layer that wraps around your existing autonomous systems, including but not limited to:</p>
+
+    <div class="int-grid">
+      <div class="int-card reveal reveal-delay-1">
+        <div class="int-card-header">
+          <div class="int-icon int-icon-robotics">R</div>
+          <h3>Robotics & Physical Systems</h3>
+        </div>
+        <p>Every motor command, gripper action, and navigation decision passes through the Execution Gate. The Hardware HAL Gate provides FPGA-enforced physical isolation for safety-critical operations.</p>
+        <div class="int-frameworks"><strong>Examples:</strong> OpenClaw, ROS 2, Isaac Sim, Boston Dynamics API, industrial PLCs</div>
+      </div>
+      <div class="int-card reveal reveal-delay-2">
+        <div class="int-card-header">
+          <div class="int-icon int-icon-agents">A</div>
+          <h3>AI Agent Frameworks</h3>
+        </div>
+        <p>Tool calls, API invocations, and chain-of-thought actions are authorized by the Governance Kernel before execution. Prevents prompt injection from escalating to unauthorized actions.</p>
+        <div class="int-frameworks"><strong>Examples:</strong> LangChain, AutoGPT, CrewAI, Claude tool use, OpenAI function calling</div>
+      </div>
+      <div class="int-card reveal reveal-delay-3">
+        <div class="int-card-header">
+          <div class="int-icon int-icon-trading">F</div>
+          <h3>Financial & Trading Systems</h3>
+        </div>
+        <p>Fluidity Tokens enable machine-speed execution within pre-authorized bounds. The Stateful Accumulator tracks cumulative exposure across all positions to defeat salami-slicing.</p>
+        <div class="int-frameworks"><strong>Examples:</strong> Algorithmic trading engines, payment processors, DeFi protocols, risk management</div>
+      </div>
+      <div class="int-card reveal reveal-delay-4">
+        <div class="int-card-header">
+          <div class="int-icon int-icon-infra">I</div>
+          <h3>Critical Infrastructure</h3>
+        </div>
+        <p>Every control command gets a cryptographic receipt. Poison Pill broadcast enables sub-second emergency halt across distributed systems. Disconnected operation via Fluidity Tokens for high-latency environments.</p>
+        <div class="int-frameworks"><strong>Examples:</strong> Power grid SCADA, water treatment, satellite operations, medical devices</div>
+      </div>
+    </div>
+
+    <div class="int-diagram reveal">
+      <span class="layer-ext">Your Framework (OpenClaw, LangChain, trading engine, SCADA ...)</span><br>
+      <span class="layer-arrow">&darr; action request &darr;</span><br>
+      <span class="layer-your">Governance Kernel &rarr; Approval Receipt &rarr; Execution Gate</span><br>
+      <span class="layer-arrow">&darr; authorized action &darr;</span><br>
+      <span class="layer-ext">Execution Target (motor, API, ledger, valve ...)</span><br>
+      <span class="layer-arrow">&darr; immutable record &darr;</span><br>
+      <span class="layer-your">Telemetry Observer</span>
     </div>
   </div>
 </section>
