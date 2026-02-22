@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "description": "Deterministic governance framework for autonomous systems. Enforces authorization boundaries with cryptographic receipts, stateful accumulators, and structural separation of authority, execution, and observation.",
   "license": "Apache-2.0",
-  "author": "Joseph H Mills",
+  "author": "Holladay Labs IP, LLC",
+  "contributors": [
+    "Joseph H Mills"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/utahbroker/invariant-governance.git"

@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Holladay Labs IP, LLC
+
 /**
  * Invariant Governance — ID Generation
  *
  * Unique identifier generation for receipts, tokens, audit entries,
  * and other governance artifacts.
- *
- * Ported from homerhq-bot-empire governance-enforcer/src/governance/hash.ts
  */
 
 import { randomUUID } from 'node:crypto';

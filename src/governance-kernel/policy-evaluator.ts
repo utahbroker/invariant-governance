@@ -1,11 +1,11 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Holladay Labs IP, LLC
+
 /**
  * Invariant Governance — Policy Evaluator
  *
  * Deterministic policy evaluation pipeline. Evaluates an intent proposal
  * against the effective authority manifest and policy matrix.
- *
- * Ported from homerhq-bot-empire enforce.ts 7-step pipeline,
- * generalized to be domain-agnostic.
  *
  * Evaluation Steps:
  * 1. Validate entity path

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invariant Governance -- Deterministic Governance for Autonomous Systems</title>
+<meta name="description" content="Open-source framework enforcing deterministic authorization boundaries on autonomous agents, trading algorithms, robotic controllers, and smart contracts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0b1120;
+  color: #c9d1d9;
+  line-height: 1.7;
+  font-size: 16px;
+}
+a { color: #58a6ff; text-decoration: none; transition: color 0.2s; }
+a:hover { color: #79c0ff; }
+
+/* Nav */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(11, 17, 32, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 0 2rem;
+}
+nav .nav-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px;
+}
+nav .nav-brand {
+  font-weight: 700; font-size: 0.95rem; color: #e6edf3;
+  letter-spacing: -0.02em;
+}
+nav .nav-links { display: flex; gap: 1.5rem; }
+nav .nav-links a {
+  font-size: 0.82rem; color: #8b949e; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+nav .nav-links a:hover { color: #e6edf3; }
+@media (max-width: 700px) {
+  nav .nav-links { gap: 0.8rem; }
+  nav .nav-links a { font-size: 0.72rem; }
+}
+
+/* Sections */
+section { padding: 5rem 2rem; }
+.container { max-width: 1000px; margin: 0 auto; }
+h2 {
+  font-size: 1.6rem; font-weight: 700; color: #e6edf3;
+  margin-bottom: 1.5rem; letter-spacing: -0.02em;
+}
+h2::after {
+  content: ''; display: block; width: 40px; height: 2px;
+  background: #1f6feb; margin-top: 0.6rem;
+}
+h3 { font-size: 1.1rem; font-weight: 600; color: #e6edf3; margin-bottom: 0.5rem; }
+p { margin-bottom: 1rem; }
+
+/* Hero */
+.hero {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  text-align: center; padding-top: 56px;
+  background: linear-gradient(170deg, #0b1120 0%, #111d33 40%, #0b1120 100%);
+  position: relative;
+}
+.hero::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+  background: linear-gradient(to bottom, transparent, #0b1120);
+}
+.hero-content { position: relative; z-index: 1; max-width: 760px; }
+.hero h1 {
+  font-size: 3rem; font-weight: 700; color: #e6edf3;
+  letter-spacing: -0.03em; margin-bottom: 0.75rem;
+}
+.hero .subtitle {
+  font-size: 1.25rem; color: #8b949e; margin-bottom: 2rem; font-weight: 400;
+}
+.hero .positioning {
+  font-size: 0.95rem; color: #6e7681; line-height: 1.8;
+  max-width: 620px; margin: 0 auto 2.5rem;
+}
+.hero .positioning strong { color: #c9d1d9; }
+.hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn {
+  display: inline-block; padding: 0.65rem 1.5rem; border-radius: 6px;
+  font-size: 0.9rem; font-weight: 600; transition: all 0.2s;
+}
+.btn-primary { background: #1f6feb; color: #fff; }
+.btn-primary:hover { background: #388bfd; color: #fff; }
+.btn-secondary {
+  background: transparent; color: #c9d1d9;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.btn-secondary:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
+@media (max-width: 600px) {
+  .hero h1 { font-size: 2rem; }
+  .hero .subtitle { font-size: 1.05rem; }
+}
+
+/* Problem */
+.problem { background: #0d1525; }
+.problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem; }
+.problem-card {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px; padding: 1.5rem;
+}
+.problem-card h3 { color: #f85149; }
+.problem-card p { font-size: 0.9rem; color: #8b949e; margin-bottom: 0; }
+.paradox {
+  margin-top: 2rem; padding: 1.25rem 1.5rem;
+  border-left: 3px solid #1f6feb; background: rgba(31,111,235,0.06);
+  border-radius: 0 6px 6px 0;
+}
+.paradox strong { color: #58a6ff; }
+@media (max-width: 700px) { .problem-grid { grid-template-columns: 1fr; } }
+
+/* Architecture */
+.arch { background: #0b1120; }
+.arch-diagram {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0; margin: 2rem 0;
+}
+.arch-plane {
+  width: 100%; max-width: 620px; border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px; padding: 1.5rem; text-align: center;
+  position: relative;
+}
+.arch-plane .plane-label {
+  position: absolute; top: -0.65rem; left: 1.25rem;
+  background: #0b1120; padding: 0 0.5rem;
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: #6e7681;
+}
+.arch-plane .component-name {
+  font-size: 1.1rem; font-weight: 700; color: #e6edf3; margin-bottom: 0.35rem;
+}
+.arch-plane .component-desc { font-size: 0.85rem; color: #8b949e; margin-bottom: 0.5rem; }
+.arch-plane .arch-caps {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  font-size: 0.78rem;
+}
+.arch-caps .can { color: #3fb950; }
+.arch-caps .cannot { color: #f85149; }
+.plane-authority { border-color: rgba(31,111,235,0.3); background: rgba(31,111,235,0.04); }
+.plane-execution { border-color: rgba(63,185,80,0.3); background: rgba(63,185,80,0.04); }
+.plane-telemetry { border-color: rgba(210,153,34,0.3); background: rgba(210,153,34,0.04); }
+.arch-connector {
+  width: 2px; height: 32px; position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.arch-connector::before {
+  content: ''; position: absolute; top: 0; bottom: 0; left: 50%;
+  width: 1px; background: rgba(255,255,255,0.12);
+}
+.arch-connector span {
+  background: #0b1120; padding: 0.15rem 0.6rem; font-size: 0.65rem;
+  color: #6e7681; text-transform: uppercase; letter-spacing: 0.08em;
+  border: 1px solid rgba(255,255,255,0.08); border-radius: 3px;
+  position: relative; z-index: 1; white-space: nowrap;
+}
+
+/* Mechanisms */
+.mechanisms { background: #0d1525; }
+.mech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1.5rem; }
+.mech-card {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px; padding: 1.25rem;
+}
+.mech-card h3 { font-size: 0.95rem; margin-bottom: 0.4rem; }
+.mech-card p { font-size: 0.85rem; color: #8b949e; margin-bottom: 0; }
+.mech-card.wide { grid-column: 1 / -1; }
+@media (max-width: 700px) { .mech-grid { grid-template-columns: 1fr; } }
+
+/* Use Cases */
+.usecases { background: #0b1120; }
+.use-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+.use-table th, .use-table td {
+  text-align: left; padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.9rem;
+}
+.use-table th {
+  color: #8b949e; font-weight: 600; font-size: 0.78rem;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.use-table td:first-child { color: #e6edf3; font-weight: 600; white-space: nowrap; }
+@media (max-width: 600px) {
+  .use-table th, .use-table td { padding: 0.6rem 0.5rem; font-size: 0.82rem; }
+}
+
+/* Code */
+.code-section { background: #0d1525; }
+.code-block {
+  background: #161b22; border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px; padding: 1.5rem; overflow-x: auto;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem;
+  line-height: 1.65; color: #c9d1d9; margin-top: 1rem;
+}
+.code-block .kw { color: #ff7b72; }
+.code-block .fn { color: #d2a8ff; }
+.code-block .str { color: #a5d6ff; }
+.code-block .cmt { color: #6e7681; font-style: italic; }
+.code-block .num { color: #79c0ff; }
+.code-block .type { color: #ffa657; }
+.code-block .prop { color: #7ee787; }
+.install-cmd {
+  background: #161b22; border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 6px; padding: 0.75rem 1.25rem; margin-top: 0.75rem;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: #c9d1d9;
+}
+.install-cmd .prompt { color: #6e7681; user-select: none; }
+
+/* Enterprise */
+.enterprise { background: #0b1120; }
+.ent-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+.ent-card {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px; padding: 1.5rem;
+}
+.ent-card h3 { margin-bottom: 0.5rem; }
+.ent-card p { font-size: 0.9rem; color: #8b949e; margin-bottom: 0; }
+@media (max-width: 700px) { .ent-grid { grid-template-columns: 1fr; } }
+
+/* Patent */
+.patent {
+  background: #0d1525;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.patent-notice {
+  background: rgba(210,153,34,0.06); border: 1px solid rgba(210,153,34,0.2);
+  border-radius: 8px; padding: 1.25rem 1.5rem; margin-top: 1rem;
+}
+.patent-notice p { font-size: 0.88rem; color: #8b949e; margin-bottom: 0; }
+
+/* Footer */
+footer {
+  background: #080c18;
+  border-top: 1px solid rgba(255,255,255,0.04);
+  padding: 3rem 2rem;
+}
+.footer-inner {
+  max-width: 1000px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  flex-wrap: wrap; gap: 2rem;
+}
+.footer-left p { font-size: 0.82rem; color: #6e7681; margin-bottom: 0.3rem; }
+.footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.footer-links a { font-size: 0.85rem; color: #8b949e; }
+.footer-links a:hover { color: #e6edf3; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">Invariant Governance</span>
+    <div class="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#mechanisms">Mechanisms</a>
+      <a href="#usecases">Use Cases</a>
+      <a href="#quickstart">Quick Start</a>
+      <a href="#enterprise">Enterprise</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <h1>Invariant Governance</h1>
+    <p class="subtitle">Deterministic governance for autonomous systems.</p>
+    <p class="positioning">
+      Autonomous agents need three layers: <strong>knowledge</strong> (what to do),
+      <strong>connectivity</strong> (how to reach tools and data), and
+      <strong>governance</strong> (whether they are allowed to act).
+      This framework is the governance layer.
+    </p>
+    <div class="hero-actions">
+      <a href="https://github.com/utahbroker/invariant-governance" class="btn btn-primary">View on GitHub</a>
+      <a href="#quickstart" class="btn btn-secondary">Quick Start</a>
+    </div>
+  </div>
+</section>
+
+<section class="problem" id="problem">
+  <div class="container">
+    <h2>The Problem</h2>
+    <p>Autonomous systems are making consequential decisions at machine speed. Existing governance approaches force a choice between two failure modes:</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <h3>Human-in-the-Loop</h3>
+        <p>Safe but slow. Every decision waits for manual approval. Latency kills throughput, operators develop alert fatigue, and the system degrades to rubber-stamping. In high-frequency environments, this approach is structurally unviable.</p>
+      </div>
+      <div class="problem-card">
+        <h3>Probabilistic Guardrails</h3>
+        <p>Fast but brittle. LLM-based filters and confidence thresholds can be gamed, hallucinated past, or silently degraded. They offer no cryptographic proof of authorization and cannot detect salami-slicing attacks.</p>
+      </div>
+    </div>
+    <div class="paradox">
+      <p>This is the <strong>Latency-Integrity Paradox</strong>: the faster your system needs to operate, the harder it becomes to maintain governance integrity -- unless the governance architecture itself is redesigned from first principles.</p>
+    </div>
+  </div>
+</section>
+
+<section class="arch" id="architecture">
+  <div class="container">
+    <h2>Architecture</h2>
+    <p>Three structurally decoupled components that cannot be collapsed, bypassed, or silently degraded. Each is defined not just by what it does, but by what it <em>structurally cannot</em> do.</p>
+    <div class="arch-diagram">
+      <div class="arch-plane plane-authority">
+        <div class="plane-label">Authority Plane</div>
+        <div class="component-name">Governance Kernel</div>
+        <div class="component-desc">Evaluates policy, issues Approval Receipts and Fluidity Tokens, maintains the Stateful Accumulator.</div>
+        <div class="arch-caps">
+          <span class="can">CAN: Evaluate + Sign</span>
+          <span class="cannot">CANNOT: Execute actions</span>
+        </div>
+      </div>
+      <div class="arch-connector"><span>Sovereign Boundary</span></div>
+      <div class="arch-plane plane-execution">
+        <div class="plane-label">Execution Plane</div>
+        <div class="component-name">Execution Gate</div>
+        <div class="component-desc">Validates receipts via six-step cryptographic verification. Permits or blocks every outbound action.</div>
+        <div class="arch-caps">
+          <span class="can">CAN: Enforce + Block</span>
+          <span class="cannot">CANNOT: Authorize itself</span>
+        </div>
+      </div>
+      <div class="arch-connector"><span>One-Way Mirror</span></div>
+      <div class="arch-plane plane-telemetry">
+        <div class="plane-label">Advisory Telemetry</div>
+        <div class="component-name">Telemetry Observer</div>
+        <div class="component-desc">Records all decisions, computes degradation scores, detects drift. One-way data ingestion only.</div>
+        <div class="arch-caps">
+          <span class="can">CAN: Observe + Advise</span>
+          <span class="cannot">CANNOT: Intervene</span>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:0.85rem;color:#6e7681;">These constraints are not conventions -- they are enforced by the architecture. The Kernel has no credentials for execution targets. The Gate has no signing key. Telemetry has no write channel.</p>
+  </div>
+</section>
+
+<section class="mechanisms" id="mechanisms">
+  <div class="container">
+    <h2>Key Mechanisms</h2>
+    <div class="mech-grid">
+      <div class="mech-card">
+        <h3>Approval Receipts</h3>
+        <p>Cryptographically signed, non-fungible, single-use authorization tokens. Each receipt binds a specific action to a specific context at a specific time, with parameter-hash binding to prevent substitution attacks.</p>
+      </div>
+      <div class="mech-card">
+        <h3>Fluidity Tokens</h3>
+        <p>Speculative pre-authorization for high-frequency and high-latency environments. A Fluidity Token grants bounded execution authority consumed incrementally, enabling machine-speed operation within governor-defined limits.</p>
+      </div>
+      <div class="mech-card">
+        <h3>Stateful Accumulator</h3>
+        <p>Tracks cumulative impact across all actions, not just individual transactions. Defeats salami-slicing attacks where each action falls within bounds but the cumulative effect is catastrophic.</p>
+      </div>
+      <div class="mech-card">
+        <h3>Poison Pill Broadcast</h3>
+        <p>Emergency halt with sub-second propagation. Revokes all outstanding Fluidity Tokens and Approval Receipts system-wide, destroys ephemeral key shards, and forces lockdown faster than any agent can act.</p>
+      </div>
+      <div class="mech-card wide">
+        <h3>Hardware HAL Gate</h3>
+        <p>For physical safety-critical systems (robotics, industrial control, infrastructure), a hardware-enforced gate with FPGA governance logic, galvanic isolation, and a physics logic module. Software cannot bypass it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="usecases" id="usecases">
+  <div class="container">
+    <h2>Use Cases</h2>
+    <p>Domain-agnostic by design. Validated across eight industrial domains:</p>
+    <table class="use-table">
+      <thead><tr><th>Domain</th><th>Example Scenario</th></tr></thead>
+      <tbody>
+        <tr><td>Financial Services</td><td>Algorithmic trading governance, transaction authorization, cumulative exposure limits</td></tr>
+        <tr><td>Healthcare</td><td>Clinical decision support, nurse handoff attestation, medication administration gates</td></tr>
+        <tr><td>Orbital / Disconnected</td><td>Satellite command authorization with high-latency Fluidity Tokens, autonomous operation within bounded authority</td></tr>
+        <tr><td>Blockchain</td><td>On-chain governance enforcement, smart contract execution gating, cross-chain authorization</td></tr>
+        <tr><td>Logistics</td><td>Autonomous vehicle routing, warehouse robotics, shipment release authorization</td></tr>
+        <tr><td>Enterprise</td><td>Contract execution workflows, procurement authorization, multi-party approval chains</td></tr>
+        <tr><td>Government</td><td>Benefits issuance, permit authorization, regulatory compliance enforcement</td></tr>
+        <tr><td>Critical Infrastructure</td><td>Power grid control, water treatment, industrial SCADA with Hardware HAL Gate</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="code-section" id="quickstart">
+  <div class="container">
+    <h2>Quick Start</h2>
+    <div class="install-cmd"><span class="prompt">$ </span>npm install @invariant-governance/core</div>
+    <div class="code-block"><span class="kw">import</span> {
+  <span class="type">GovernanceKernel</span>,
+  <span class="type">ExecutionGate</span>,
+  <span class="type">TelemetryObserver</span>,
+} <span class="kw">from</span> <span class="str">"@invariant-governance/core"</span>;
+
+<span class="cmt">// Initialize the three components</span>
+<span class="kw">const</span> kernel = <span class="kw">new</span> <span class="type">GovernanceKernel</span>({
+  <span class="prop">policy</span>: {
+    <span class="prop">maxSingleAction</span>: <span class="num">10_000</span>,
+    <span class="prop">maxCumulativeWindow</span>: <span class="num">100_000</span>,
+    <span class="prop">windowDuration</span>: <span class="str">"1h"</span>,
+    <span class="prop">requireMultiSig</span>: (<span class="fn">amount</span>) => amount > <span class="num">50_000</span>,
+  },
+});
+
+<span class="kw">const</span> gate = <span class="kw">new</span> <span class="type">ExecutionGate</span>({
+  <span class="prop">kernelPublicKey</span>: kernel.<span class="prop">publicKey</span>,
+  <span class="prop">onPoisonPill</span>: () => process.<span class="fn">exit</span>(<span class="num">1</span>),
+});
+
+<span class="kw">const</span> telemetry = <span class="kw">new</span> <span class="type">TelemetryObserver</span>({
+  <span class="prop">sinks</span>: [console, auditLog],
+});
+
+<span class="cmt">// Request authorization for an action</span>
+<span class="kw">const</span> receipt = <span class="kw">await</span> kernel.<span class="fn">evaluate</span>({
+  <span class="prop">action</span>: <span class="str">"transfer"</span>,
+  <span class="prop">amount</span>: <span class="num">5_000</span>,
+  <span class="prop">target</span>: <span class="str">"account-7291"</span>,
+  <span class="prop">context</span>: { <span class="prop">initiator</span>: <span class="str">"agent-alpha"</span>, <span class="prop">session</span>: <span class="str">"s-0042"</span> },
+});
+
+<span class="cmt">// Execute only if the receipt is valid</span>
+<span class="kw">const</span> result = <span class="kw">await</span> gate.<span class="fn">execute</span>(receipt, <span class="kw">async</span> () => {
+  <span class="kw">return await</span> ledger.<span class="fn">transfer</span>(<span class="str">"account-7291"</span>, <span class="num">5_000</span>);
+});
+
+<span class="cmt">// Telemetry records everything -- no intervention capability</span>
+telemetry.<span class="fn">record</span>(receipt, result);</div>
+  </div>
+</section>
+
+<section class="enterprise" id="enterprise">
+  <div class="container">
+    <h2>Open Source + Enterprise</h2>
+    <div class="ent-grid">
+      <div class="ent-card">
+        <h3>Open Source (Apache 2.0)</h3>
+        <p>The complete governance framework, all three components, protocol specifications, and reference implementations. Free to use, modify, and distribute. The Apache 2.0 license includes a patent grant for all use of the open-source software.</p>
+      </div>
+      <div class="ent-card">
+        <h3>Commercial Licenses</h3>
+        <p>Available for organizations requiring patent coverage beyond the Apache 2.0 grant, dedicated support, certified builds, or compliance documentation for regulated industries. Contact <a href="mailto:invariant@holladaylabsip.com">invariant@holladaylabsip.com</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="patent" id="patent">
+  <div class="container">
+    <h2>Patent Notice</h2>
+    <div class="patent-notice">
+      <p>The Invariant Governance architecture is protected by U.S. Patent Application No. 19/533,191, PCT International Application No. PCT/US26/15432, and related continuation applications. Use of this software under the Apache 2.0 License includes a patent grant as described in Section 3 of the License. See <a href="https://github.com/utahbroker/invariant-governance/blob/main/PATENT_NOTICE.md">PATENT_NOTICE.md</a> for the full patent notice and defensive termination provisions.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <p>Copyright 2026 Holladay Labs IP, LLC.</p>
+      <p>Licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/utahbroker/invariant-governance">GitHub</a>
+      <a href="https://www.npmjs.com/package/@invariant-governance/core">npm</a>
+      <a href="mailto:invariant@holladaylabsip.com">Enterprise Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

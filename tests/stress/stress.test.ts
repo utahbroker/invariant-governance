@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Holladay Labs IP, LLC
+
 /**
  * Stress Test Suite: Invariant Governance SDK
  *

@@ -6,6 +6,8 @@ Invariant Governance is an open-source framework that enforces authorization bou
 
 It separates *who may authorize* from *what may execute* from *what may observe*, using three structurally decoupled components that cannot be collapsed, bypassed, or silently degraded.
 
+> Autonomous agents need three layers: **knowledge** (what to do), **connectivity** (how to reach tools and data), and **governance** (whether they are allowed to act). This framework is the governance layer.
+
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Patent](https://img.shields.io/badge/Patent-US_19%2F533%2C191-green.svg)](PATENT_NOTICE.md)
 
@@ -197,7 +199,7 @@ Invariant Governance follows an **open-core model**:
 
 - **Patent portfolio** -- The underlying architecture is protected by U.S. Patent Application No. 19/533,191, PCT International Application No. PCT/US26/15432, and related continuation applications. The Apache 2.0 license includes a patent grant for all use of the open-source software. See [PATENT_NOTICE.md](PATENT_NOTICE.md) for details.
 
-For enterprise licensing inquiries: **enterprise@invariant-governance.dev**
+For enterprise licensing inquiries: **invariant@holladaylabsip.com**
 
 ---
 
@@ -219,7 +221,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 ## License
 
-Copyright 2026 Joseph H Mills.
+Copyright 2026 Holladay Labs IP, LLC.
 
 Licensed under the Apache License, Version 2.0. You may obtain a copy of the License at:
 
@@ -237,4 +239,4 @@ This software is covered by one or more patent applications. Use of this softwar
 - [Patent Notice](PATENT_NOTICE.md)
 - [Apache 2.0 License](LICENSE)
 - [Contributing Guidelines](CONTRIBUTING.md)
-- [Enterprise Licensing](mailto:enterprise@invariant-governance.dev)
+- [Enterprise Licensing](mailto:invariant@holladaylabsip.com)

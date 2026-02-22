@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Holladay Labs IP, LLC
+
 /**
  * Invariant Governance — Hash-Chained Audit Log
  *
@@ -7,8 +10,6 @@
  *
  * Any modification to any entry breaks the chain, making
  * tampering detectable by verifyChainIntegrity().
- *
- * Ported from homerhq-bot-empire log.ts hash chain logic.
  */
 
 import type { AuditEntry, ChainVerification } from '../types/decisions.js';

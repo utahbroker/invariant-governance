@@ -1,8 +1,9 @@
-Invariant Governance Framework
-Copyright 2026 Joseph H Mills
+Invariant Governance SDK
+Copyright 2026 Holladay Labs IP, LLC
 
 This product includes software developed by Joseph H Mills.
 
-This software implements the governance architecture described in
-U.S. Patent Application No. 19/533,191 and related applications.
-See PATENT_NOTICE.md for full patent information.
+Patent Notice: This software is covered by one or more patents and/or
+patent applications assigned to Holladay Labs IP, LLC, including
+US App. No. 19/533,191 and related applications. Licensed under
+Apache License 2.0 with patent grant.

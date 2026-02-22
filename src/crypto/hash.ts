@@ -1,11 +1,11 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Holladay Labs IP, LLC
+
 /**
  * Invariant Governance — Cryptographic Hashing
  *
  * SHA-256 hashing for parameter binding, audit chain integrity,
  * and tamper-evident decision logs.
- *
- * Ported from homerhq-bot-empire governance-enforcer/src/governance/hash.ts
- * with Cloudflare-specific APIs replaced by Node.js crypto.
  */
 
 import { createHash } from 'node:crypto';

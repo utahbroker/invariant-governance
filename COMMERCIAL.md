@@ -14,7 +14,7 @@ Invariant Governance uses an open-core licensing model:
 
 ### Enterprise Edition
 - **License**: Commercial
-- **Contact**: enterprise@invariant-governance.dev
+- **Contact**: invariant@holladaylabsip.com
 
 Enterprise features include:
 
@@ -35,13 +35,32 @@ Enterprise features include:
 | Deployment consulting | - | Yes |
 | Custom policy matrix development | - | Yes |
 | Regulatory pre-certification packages | - | Yes |
-| Extended patent coverage | Apache 2.0 grant | Broad commercial grant |
+| Patent grant for SDK code | Yes (Apache 2.0 Section 3) | Yes |
+| Patent license for independent implementations | - | Yes |
+| White-label / OEM rights | - | Yes |
 
 ## Why Enterprise?
 
-The Community Edition provides the complete governance architecture. The
-Enterprise Edition adds the operational tooling that large organizations
-need for production deployment at scale:
+The Community Edition provides the complete governance architecture with
+full patent rights under the Apache 2.0 license. If you use this SDK code
+(or derivative works), you already have a perpetual, royalty-free patent
+license per Section 3 of the Apache License.
+
+The Enterprise Edition is designed for two additional scenarios:
+
+### Independent Implementations
+
+If your organization wants to build its own implementation of the
+governance architecture described in the patent portfolio -- without using
+this SDK code -- the Apache 2.0 patent grant does not apply. The
+commercial license provides patent coverage for independent
+implementations, white-label products, and OEM integrations that implement
+the patented architecture in proprietary code.
+
+### Enterprise Operational Tooling
+
+Large organizations deploying governance at scale need operational tooling
+beyond the core framework:
 
 1. **Compliance**: Pre-built audit trails mapping to SOC2, HIPAA, and
    FedRAMP control frameworks
@@ -51,14 +70,21 @@ need for production deployment at scale:
    safety-critical infrastructure
 4. **Scale**: Multi-tenant governance with organizational hierarchy
    mapping to Entity Paths
-5. **Support**: Guaranteed response times and deployment guidance
+5. **Priority support**: SLA-backed response times, deployment consulting,
+   and custom policy matrix development
 
 ## Patent Portfolio
 
 The underlying architecture is protected by a portfolio of U.S. and
-international patent applications. The Apache 2.0 license grants patent
-rights for use of this software. The Enterprise license provides
-broader patent coverage for organizations building proprietary systems
-that implement the governance architecture.
+international patent applications (see [PATENT_NOTICE.md](PATENT_NOTICE.md)
+for the full list).
 
-See [PATENT_NOTICE.md](PATENT_NOTICE.md) for the full patent list.
+**If you use this SDK code**, the Apache 2.0 license (Section 3) grants
+you a perpetual, worldwide, non-exclusive, royalty-free patent license
+covering the SDK and derivative works. No additional license is needed.
+
+**If you build an independent implementation** of the governance
+architecture without using this SDK code, the Apache 2.0 patent grant
+does not extend to that implementation. The commercial license provides
+patent coverage for independent implementations, enabling organizations
+to build proprietary systems based on the patented architecture.

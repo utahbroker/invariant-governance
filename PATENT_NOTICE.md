@@ -1,7 +1,7 @@
 # Patent Notice
 
-This technology is covered by the following patent applications owned by
-Joseph H Mills:
+This technology is covered by the following patent applications assigned to
+Holladay Labs IP, LLC:
 
 ## United States Patent Applications
 
@@ -43,4 +43,4 @@ such litigation is filed.
 
 For use cases requiring patent coverage beyond the scope of the Apache
 2.0 grant, commercial licenses are available. Contact:
-enterprise@invariant-governance.dev
+invariant@holladaylabsip.com

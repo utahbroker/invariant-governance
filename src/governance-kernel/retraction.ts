@@ -1,11 +1,12 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Holladay Labs IP, LLC
+
 /**
  * Invariant Governance — Retraction & Poison Pill
  *
  * Retraction cascade: retracting an entity path cascades to all descendants.
  * Poison Pill (302): emergency halt that revokes all outstanding tokens
  * and receipts, entering lockdown state.
- *
- * Ported from homerhq-bot-empire kill.ts cascade logic.
  */
 
 import type { EntityPath } from '../types/common.js';

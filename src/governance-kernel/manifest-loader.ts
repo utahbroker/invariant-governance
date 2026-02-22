@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Holladay Labs IP, LLC
+
 /**
  * Invariant Governance — Manifest Loader
  *
@@ -9,8 +12,6 @@
  *   - spend_limit: minimum (child can only reduce)
  *   - can_delegate_to: intersection (child can only reduce targets)
  *   - alert_on: union (child can only add alerts)
- *
- * Ported from homerhq-bot-empire load.ts mergePermissionsRestrictive().
  */
 
 import type { EntityPath } from '../types/common.js';
