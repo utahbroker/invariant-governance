@@ -9,7 +9,7 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Invariant Governance">
-<meta property="og:description" content="Deterministic governance for autonomous systems. Cryptographic receipts, structural separation, zero-trust enforcement.">
+<meta property="og:description" content="The missing governance layer for autonomous systems. Structural impossibility, not probabilistic guardrails. Deterministic evaluation, cryptographic receipts, zero ambiguity.">
 <meta property="og:url" content="https://utahbroker.github.io/invariant-governance/">
 <meta property="og:image" content="https://utahbroker.github.io/invariant-governance/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -19,7 +19,7 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Invariant Governance">
-<meta name="twitter:description" content="Deterministic governance for autonomous systems. Open-source under Apache 2.0.">
+<meta name="twitter:description" content="The missing governance layer for autonomous systems. Structural impossibility, not probabilistic guardrails. Open-source under Apache 2.0.">
 <meta name="twitter:image" content="https://utahbroker.github.io/invariant-governance/og-image.png">
 
 <!-- Favicon (inline SVG) -->
@@ -639,7 +639,7 @@ footer {
 
     <h1>Invariant Governance</h1>
     <p class="tagline">Every action. Signed. Verified. Auditable.</p>
-    <p class="subtitle">The missing governance layer for autonomous systems. Structural separation and cryptographic enforcement make unauthorized action mathematically impossible — not just unlikely.</p>
+    <p class="subtitle">The missing governance layer for autonomous systems. Structural separation makes unauthorized action impossible — not just unlikely — when correctly implemented. Deterministic evaluation, cryptographic receipts, zero ambiguity.</p>
 
     <!-- Three architecture cards -->
     <div class="hero-planes">
@@ -699,7 +699,7 @@ footer {
       </div>
     </div>
     <div class="paradox reveal reveal-delay-4">
-      <p>This is the <strong>Latency-Integrity Paradox</strong>: the faster your system needs to operate, the harder it becomes to maintain governance integrity -- unless the governance architecture itself is redesigned from first principles.</p>
+      <p>This is the <strong>Latency-Integrity Paradox</strong>: the faster your system needs to operate, the harder it becomes to maintain governance integrity -- unless the governance architecture itself is redesigned from first principles. No existing framework solves this. This architecture has never existed before.</p>
     </div>
   </div>
 </section>
@@ -746,7 +746,7 @@ footer {
             <td class="partial">Medium</td>
             <td class="check">On-chain</td>
             <td class="partial">Per-chain</td>
-            <td class="cross">Irreversible</td>
+            <td class="partial">Slow / cannot undo</td>
           </tr>
           <tr>
             <td>Invariant Governance</td>
@@ -764,7 +764,8 @@ footer {
 <section class="arch" id="architecture">
   <div class="container">
     <h2 class="reveal">Architecture</h2>
-    <p class="reveal reveal-delay-1">Three structurally decoupled components that cannot be collapsed, bypassed, or silently degraded. Each is defined not just by what it does, but by what it <em>structurally cannot</em> do.</p>
+    <p class="reveal reveal-delay-1"><strong>Deterministic</strong> means: given the same action, the same policy, and the same accumulator state, the system always produces the same decision. No randomness. No LLM judgment. No confidence scores. The outcome is a mathematical function of the inputs — verifiable, reproducible, and auditable.</p>
+    <p class="reveal reveal-delay-2">Three structurally decoupled components that cannot be collapsed, bypassed, or silently degraded. Each is defined not just by what it does, but by what it <em>structurally cannot</em> do.</p>
     <div class="arch-diagram">
       <div class="arch-plane plane-authority reveal reveal-delay-1">
         <div class="plane-label">Authority Plane</div>
@@ -827,7 +828,7 @@ footer {
         </div>
       </div>
 
-      <p class="guarantee-bottom">These are not rules that can be misconfigured, overridden, or socially engineered. They are <strong>structural properties of the architecture</strong> — enforced by the absence of capabilities, not the presence of restrictions. When correctly implemented, unauthorized action is not improbable. It is impossible.</p>
+      <p class="guarantee-bottom">These are not rules that can be misconfigured, overridden, or socially engineered. They are <strong>structural properties of the architecture</strong> — enforced by the absence of capabilities, not the presence of restrictions. In software, this is logical impossibility through credential isolation. For physical systems, the Hardware HAL Gate extends this to <strong>physical impossibility</strong> through galvanic isolation — no electrical path exists for software to bypass the gate. When correctly implemented, unauthorized action is not improbable. It is structurally impossible.</p>
     </div>
   </div>
 </section>
