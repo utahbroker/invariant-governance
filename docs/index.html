@@ -134,7 +134,7 @@ p { margin-bottom: 1rem; }
 /* ── Hero ── */
 .hero {
   min-height: 100vh; display: flex; align-items: center; justify-content: center;
-  text-align: center; padding-top: 56px;
+  text-align: center; padding: 80px 2rem 4rem;
   position: relative; overflow: hidden;
 }
 
@@ -155,9 +155,9 @@ p { margin-bottom: 1rem; }
 .hero-grid::after {
   content: '';
   position: absolute;
-  top: 30%; left: 50%; transform: translate(-50%, -50%);
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(31, 111, 235, 0.15) 0%, transparent 70%);
+  top: 20%; left: 50%; transform: translate(-50%, -50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(31, 111, 235, 0.12) 0%, transparent 70%);
   animation: glowPulse 4s ease-in-out infinite;
 }
 @keyframes gridDrift {
@@ -174,13 +174,81 @@ p { margin-bottom: 1rem; }
   z-index: 1;
 }
 
-.hero-content { position: relative; z-index: 2; max-width: 760px; }
+.hero-content { position: relative; z-index: 2; max-width: 960px; width: 100%; }
+
+/* Large shield logo */
+.hero-logo {
+  width: 88px; height: 88px; margin: 0 auto 1.5rem;
+  filter: drop-shadow(0 0 30px rgba(31, 111, 235, 0.3));
+  animation: logoFloat 3s ease-in-out infinite;
+}
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
 .hero h1 {
-  font-size: 3rem; font-weight: 700; color: #e6edf3;
-  letter-spacing: -0.03em; margin-bottom: 0.75rem;
+  font-size: 3.2rem; font-weight: 700; color: #e6edf3;
+  letter-spacing: -0.03em; margin-bottom: 0.5rem;
+}
+.hero .tagline {
+  font-size: 1.35rem; color: #58a6ff; margin-bottom: 0.5rem;
+  font-weight: 600; letter-spacing: 0.02em;
 }
 .hero .subtitle {
-  font-size: 1.25rem; color: #8b949e; margin-bottom: 1.5rem; font-weight: 400;
+  font-size: 1rem; color: #6e7681; margin-bottom: 2rem; font-weight: 400;
+  max-width: 540px; margin-left: auto; margin-right: auto;
+}
+
+/* Three plane cards in hero */
+.hero-planes {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;
+  margin-bottom: 2rem; text-align: left;
+}
+.hero-plane-card {
+  border-radius: 10px; padding: 1.25rem 1.25rem 1rem;
+  position: relative; overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.hero-plane-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.hero-plane-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+}
+.hpc-kernel {
+  background: rgba(31, 111, 235, 0.06);
+  border: 1px solid rgba(31, 111, 235, 0.2);
+}
+.hpc-kernel::before { background: #1f6feb; }
+.hpc-kernel:hover { border-color: rgba(31, 111, 235, 0.5); }
+.hpc-gate {
+  background: rgba(63, 185, 80, 0.06);
+  border: 1px solid rgba(63, 185, 80, 0.2);
+}
+.hpc-gate::before { background: #3fb950; }
+.hpc-gate:hover { border-color: rgba(63, 185, 80, 0.5); }
+.hpc-telemetry {
+  background: rgba(210, 153, 34, 0.06);
+  border: 1px solid rgba(210, 153, 34, 0.2);
+}
+.hpc-telemetry::before { background: #d29922; }
+.hpc-telemetry:hover { border-color: rgba(210, 153, 34, 0.5); }
+
+.hpc-label {
+  font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: #6e7681; margin-bottom: 0.4rem;
+}
+.hpc-name {
+  font-size: 1.05rem; font-weight: 700; color: #e6edf3; margin-bottom: 0.5rem;
+}
+.hpc-caps { display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.78rem; }
+.hpc-caps .can { color: #3fb950; }
+.hpc-caps .cannot { color: #f85149; }
+
+.hero-connectors {
+  display: none; /* visual connectors between cards on desktop handled by gap */
 }
 
 /* Badges */
@@ -190,26 +258,35 @@ p { margin-bottom: 1rem; }
 }
 .hero-badges img { height: 20px; }
 
-.hero .positioning {
-  font-size: 0.95rem; color: #6e7681; line-height: 1.8;
-  max-width: 620px; margin: 0 auto 2.5rem;
-}
-.hero .positioning strong { color: #c9d1d9; }
 .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 .btn {
-  display: inline-block; padding: 0.65rem 1.5rem; border-radius: 6px;
+  display: inline-block; padding: 0.7rem 1.75rem; border-radius: 6px;
   font-size: 0.9rem; font-weight: 600; transition: all 0.2s;
 }
-.btn-primary { background: #1f6feb; color: #fff; }
-.btn-primary:hover { background: #388bfd; color: #fff; }
+.btn-primary {
+  background: #1f6feb; color: #fff;
+  box-shadow: 0 0 20px rgba(31, 111, 235, 0.25);
+}
+.btn-primary:hover { background: #388bfd; color: #fff; box-shadow: 0 0 30px rgba(31, 111, 235, 0.4); }
 .btn-secondary {
   background: transparent; color: #c9d1d9;
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.15);
 }
-.btn-secondary:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
-@media (max-width: 600px) {
+.btn-secondary:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
+.btn-outline-enterprise {
+  background: transparent; color: #d29922;
+  border: 1px solid rgba(210, 153, 34, 0.3);
+}
+.btn-outline-enterprise:hover { border-color: rgba(210, 153, 34, 0.6); color: #e6b422; }
+
+@media (max-width: 768px) {
+  .hero { padding: 72px 1.25rem 3rem; }
+  .hero-logo { width: 64px; height: 64px; margin-bottom: 1rem; }
   .hero h1 { font-size: 2rem; }
-  .hero .subtitle { font-size: 1.05rem; }
+  .hero .tagline { font-size: 1.1rem; }
+  .hero .subtitle { font-size: 0.9rem; }
+  .hero-planes { grid-template-columns: 1fr; gap: 0.75rem; }
+  .hero-plane-card { padding: 1rem; }
 }
 
 /* ── Problem ── */
@@ -455,24 +532,63 @@ footer {
   <div class="hero-grid"></div>
   <div class="hero-fade"></div>
   <div class="hero-content">
+
+    <!-- Large shield logo -->
+    <svg class="hero-logo" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="heroShield" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1f6feb"/>
+          <stop offset="100%" stop-color="#58a6ff"/>
+        </linearGradient>
+      </defs>
+      <path d="M32 4L8 16v16c0 14.4 10.2 27.8 24 32 13.8-4.2 24-17.6 24-32V16L32 4z" fill="url(#heroShield)" opacity="0.9"/>
+      <path d="M32 14L16 22v10c0 9.6 6.8 18.5 16 21.3 9.2-2.8 16-11.7 16-21.3V22L32 14z" fill="#0b1120"/>
+      <path d="M28 30l-4-4-2.5 2.5L28 35l12-12-2.5-2.5L28 30z" fill="#58a6ff"/>
+    </svg>
+
     <h1>Invariant Governance</h1>
-    <p class="subtitle">Deterministic governance for autonomous systems.</p>
+    <p class="tagline">Every action. Signed. Verified. Auditable.</p>
+    <p class="subtitle">The open-source runtime governance framework for autonomous systems operating at machine speed in regulated, high-stakes, and safety-critical environments.</p>
+
+    <!-- Three architecture cards -->
+    <div class="hero-planes">
+      <div class="hero-plane-card hpc-kernel">
+        <div class="hpc-label">Authority Plane</div>
+        <div class="hpc-name">Governance Kernel</div>
+        <div class="hpc-caps">
+          <span class="can">CAN: Evaluate policy + sign receipts</span>
+          <span class="cannot">CANNOT: Execute any action</span>
+        </div>
+      </div>
+      <div class="hero-plane-card hpc-gate">
+        <div class="hpc-label">Execution Plane</div>
+        <div class="hpc-name">Execution Gate</div>
+        <div class="hpc-caps">
+          <span class="can">CAN: Enforce + block outbound calls</span>
+          <span class="cannot">CANNOT: Authorize itself</span>
+        </div>
+      </div>
+      <div class="hero-plane-card hpc-telemetry">
+        <div class="hpc-label">Advisory Telemetry</div>
+        <div class="hpc-name">Telemetry Observer</div>
+        <div class="hpc-caps">
+          <span class="can">CAN: Observe + compute drift scores</span>
+          <span class="cannot">CANNOT: Intervene or modify state</span>
+        </div>
+      </div>
+    </div>
+
     <div class="hero-badges">
       <img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License: Apache 2.0" loading="lazy">
       <img src="https://img.shields.io/npm/v/@invariant-governance/core.svg?color=blue" alt="npm version" loading="lazy">
       <img src="https://img.shields.io/badge/tests-78%20passing-brightgreen.svg" alt="Tests: 78 passing" loading="lazy">
-      <img src="https://img.shields.io/badge/TypeScript-strict-blue.svg" alt="TypeScript: strict" loading="lazy">
+      <img src="https://img.shields.io/badge/patent-US%2019%2F533%2C191-orange.svg" alt="Patent: US 19/533,191" loading="lazy">
     </div>
-    <p class="positioning">
-      Three structurally separated planes that cannot be collapsed or bypassed:
-      the <strong>Governance Kernel</strong> (signs, cannot execute),
-      the <strong>Execution Gate</strong> (enforces, cannot authorize), and
-      the <strong>Telemetry Observer</strong> (advises, cannot intervene).
-      Every action gets a cryptographic receipt. No exceptions.
-    </p>
+
     <div class="hero-actions">
       <a href="https://github.com/utahbroker/invariant-governance" class="btn btn-primary">View on GitHub</a>
       <a href="#quickstart" class="btn btn-secondary">Quick Start</a>
+      <a href="mailto:invariant@holladaylabsip.com" class="btn btn-outline-enterprise">Enterprise Licensing</a>
     </div>
   </div>
 </section>
