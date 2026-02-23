@@ -11,6 +11,10 @@
     "type": "git",
     "url": "https://github.com/utahbroker/invariant-governance.git"
   },
+  "homepage": "https://utahbroker.github.io/invariant-governance/",
+  "bugs": {
+    "url": "https://github.com/utahbroker/invariant-governance/issues"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

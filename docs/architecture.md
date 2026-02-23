@@ -923,7 +923,6 @@ invariant-governance/
   integrations/            # Integration adapters for external systems
   docs/
     architecture.md        # This document
-    figures/               # Architecture diagrams
 ```
 
 ---

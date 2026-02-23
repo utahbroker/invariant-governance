@@ -95,11 +95,10 @@ codebase:
 - Write JSDoc comments for all public APIs.
 - Keep functions focused and small. Prefer composition over inheritance.
 
-Linting and formatting are enforced automatically. Run before committing:
+Linting is enforced automatically. Run before committing:
 
 ```bash
 npm run lint
-npm run format
 ```
 
 ## Commit Messages
