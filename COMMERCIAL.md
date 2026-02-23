@@ -88,3 +88,7 @@ architecture without using this SDK code, the Apache 2.0 patent grant
 does not extend to that implementation. The commercial license provides
 patent coverage for independent implementations, enabling organizations
 to build proprietary systems based on the patented architecture.
+
+---
+
+Copyright 2026 Holladay Labs IP, LLC. Licensed under [Apache License 2.0](LICENSE).

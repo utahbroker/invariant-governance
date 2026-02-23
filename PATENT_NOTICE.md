@@ -44,3 +44,7 @@ such litigation is filed.
 For use cases requiring patent coverage beyond the scope of the Apache
 2.0 grant, commercial licenses are available. Contact:
 invariant@holladaylabsip.com
+
+---
+
+Copyright 2026 Holladay Labs IP, LLC. Licensed under [Apache License 2.0](LICENSE).
