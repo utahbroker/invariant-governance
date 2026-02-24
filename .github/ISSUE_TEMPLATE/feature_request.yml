@@ -1,0 +1,61 @@
+name: Feature Request
+description: Suggest a new feature or enhancement
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for your feature request. Please note that contributions must respect the
+        [design principles](https://github.com/utahbroker/invariant-governance/blob/main/CONTRIBUTING.md#design-principles)
+        — three-component separation, deterministic governance, sovereign boundary integrity, and one-way telemetry.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Use Case
+      description: What problem does this feature solve? What use case does it enable?
+      placeholder: I'm trying to... but currently...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: How should this work? Include API examples if applicable.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which architectural component does this affect?
+      options:
+        - Governance Kernel
+        - Execution Gate
+        - Telemetry Observer
+        - Cross-component
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Any alternative approaches you've considered.
+
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Architectural Constraints
+      description: Confirm your feature respects the design principles.
+      options:
+        - label: This feature does not allow any component to assume the role of another
+          required: true
+        - label: This feature uses deterministic evaluation (no probabilistic scoring or ML-based filtering)
+          required: true
+        - label: This feature does not weaken the Sovereign Boundary
+          required: true

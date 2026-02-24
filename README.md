@@ -8,6 +8,7 @@ It separates *who may authorize* from *what may execute* from *what may observe*
 
 > Autonomous agents need three layers: **knowledge** (what to do), **connectivity** (how to reach tools and data), and **governance** (whether they are allowed to act). This framework is the governance layer.
 
+[![CI](https://github.com/utahbroker/invariant-governance/actions/workflows/ci.yml/badge.svg)](https://github.com/utahbroker/invariant-governance/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Patent](https://img.shields.io/badge/Patent-US_19%2F533%2C191-green.svg)](PATENT_NOTICE.md)
 
