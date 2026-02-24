@@ -232,6 +232,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 This software is covered by one or more patent applications. Use of this software under the Apache 2.0 License includes a patent grant as described in Section 3 of the License. See [PATENT_NOTICE.md](PATENT_NOTICE.md) for the full patent notice and defensive termination provisions.
 
+**Disclaimer:** This software is provided without warranty of any kind. The authors and contributors accept no liability for damages arising from its use. Structural guarantees described in this documentation assume correct implementation. See the [Apache License 2.0](LICENSE) for the complete terms.
+
 ---
 
 ## Links
