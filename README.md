@@ -1,4 +1,4 @@
-# Invariant Governance
+# Invariant Governance™
 
 **Deterministic governance for autonomous systems.**
 
